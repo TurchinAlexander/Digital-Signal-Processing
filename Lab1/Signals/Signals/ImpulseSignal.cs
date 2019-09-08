@@ -16,13 +16,12 @@ namespace Signals
 
         protected override double GetResult(Data data, int step)
         {
-            var x = 2 * Math.PI * data.Frequency * step / data.SamplingFrequency;
-            x += data.StartPhase;
+            var x = 2 * Math.PI * data.frequency * step / data.samplingFrequency;
+            x += data.startPhase;
 
-            var sin = data.Amplitude * Math.Sin(x);
-            var funcResult = Math.Asin(sin) / SinBound + (DutyFactor / DefaultRelation - 1);
+            var funcResult = Math.Asin(Math.Sin(x)) / SinBound + (DutyFactor / DefaultRelation - 1);
 
-            return Math.Sign(funcResult) >= 0 ? 1 : 0;
+            return Math.Sign(funcResult) >= 0 ? data.amplitude : 0;
         }
     }
 }

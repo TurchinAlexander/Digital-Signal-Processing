@@ -13,20 +13,20 @@ namespace ConsoleApp1
         {
             Data data = new Data()
             {
-                Amplitude = 1,
-                Frequency = 2,
-                SamplingFrequency = 16,
-                StartPhase = 0
+                amplitude = 1,
+                frequency = 2,
+                samplingFrequency = 16,
+                startPhase = 0
             };
             var time = 1;
             var dutyFactor = 0.3;
 
             ImpulseSignal impulseSignal = new ImpulseSignal(dutyFactor);
-            var results = impulseSignal.GetResultValues(data, time);
+            var results = impulseSignal.GetResultValues(data);
 
-            for (int n = 0; n <= time * data.SamplingFrequency; n++)
+            for (int n = 0; n <= time * data.samplingFrequency; n++)
             {
-                Console.WriteLine("{0, -20} {1}", (double)n / data.SamplingFrequency, results[n]);
+                Console.WriteLine("{0, -20} {1}", (double)n / data.samplingFrequency, results[n]);
             }
 
             Console.ReadKey();

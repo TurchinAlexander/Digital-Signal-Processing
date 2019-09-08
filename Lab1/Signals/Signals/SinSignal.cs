@@ -8,10 +8,10 @@ namespace Signals
             Data data,
             int step)
         {
-            var x = 2 * Math.PI * data.Frequency * step / data.SamplingFrequency;
-            x += data.StartPhase;
+            var x = 2 * Math.PI * data.frequency * step / data.samplingFrequency;
+            x += data.startPhase;
 
-            var result = data.Amplitude * Math.Sin(x);
+            var result = data.amplitude * Math.Sin(x);
 
             return result;
         }

@@ -5,28 +5,38 @@ namespace Signals
 {
     public abstract class BaseSignal
     {
-        private const double Precision = 10E-12;
+        private const int PrecisionDigits = 7;
+        private const int SubArraySize = 2;
+        private readonly double Precision = Math.Pow(10, -PrecisionDigits);
 
-        public double[] GetResultValues(Data data, int time)
+
+        public double[][] GetResultValues(Data data)
         {
-            double[] results = new double[data.SamplingFrequency + 1];
-            double temp;
+            double[][] results = new double[data.time * data.samplingFrequency + 1][];
+            double funcResult;
 
-            for (int n = 0; n <= time * data.SamplingFrequency; n++)
+            for (int n = 0; n <= data.time * data.samplingFrequency; n++)
             {
-                temp = GetResult(data, n);
+                results[n] = new double[SubArraySize];
+                funcResult = GetResult(data, n);
 
-                if (Math.Abs(temp) < Precision)
+                var roundFuncResult = Math.Round(funcResult, PrecisionDigits);
+
+                if (Math.Abs(roundFuncResult - funcResult) < Precision)
                 {
-                    temp = 0;
+                    results[n][1] = roundFuncResult;
+                }
+                else
+                {
+                    results[n][1] = funcResult;
                 }
 
-                results[n] = temp;
+                results[n][0] = (double)n / data.samplingFrequency;
             }
 
             return results;
         }
 
-        protected abstract double GetResult(Data data, int time);
+        protected abstract double GetResult(Data data, int step);
     }
 }

@@ -1,13 +1,15 @@
 ﻿namespace Signals
 {
-    public class Data
+    public struct Data
     {
-        public int Amplitude { get; set; }
+        public int amplitude;
 
-        public int Frequency { get; set; }
+        public int frequency;
 
-        public int SamplingFrequency { get; set; }
+        public int samplingFrequency;
 
-        public double StartPhase { get; set; }
+        public int time;
+
+        public double startPhase;
     }
 }
