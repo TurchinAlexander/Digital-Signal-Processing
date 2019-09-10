@@ -8,7 +8,7 @@ namespace Signals
 
         public override double GetFunc(double x)
         {
-            return (random.Next() + random.Next()) % random.Next();
+            return (random.Next() + random.Next()) % Amplitude;
         }
     }
 }

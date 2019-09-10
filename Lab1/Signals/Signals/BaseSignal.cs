@@ -2,7 +2,7 @@
 {
     public abstract class BaseSignal
     {
-        public int Amplitude { get; set; }
+        public double Amplitude { get; set; }
 
         public int Frequency { get; set; }
 

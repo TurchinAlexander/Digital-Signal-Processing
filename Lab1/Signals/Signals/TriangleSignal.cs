@@ -10,7 +10,7 @@ namespace Signals
         {
             var temp = 2 * Math.PI * Frequency * x + Phase;
 
-            var funcResult = Amplitude * Math.Asin(Math.Sin(x)) / SinBound;
+            var funcResult = Amplitude * Math.Asin(Math.Sin(temp)) / SinBound;
 
             return funcResult;
         }

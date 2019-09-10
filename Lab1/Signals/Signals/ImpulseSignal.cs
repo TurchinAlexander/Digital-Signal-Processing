@@ -13,7 +13,11 @@ namespace Signals
 
             var funcResult = sin >= 1 - 2 * DutyFactor;
 
-            return funcResult ? Amplitude : 0;
+            return funcResult ? Amplitude : -Amplitude;
+            //var multiple = 2.0 * Frequency;
+            //var sampleSaw = ((x * multiple) % 2) - 1;
+
+            //return sampleSaw > 0 ? Amplitude : -Amplitude;
         }
 
     }
