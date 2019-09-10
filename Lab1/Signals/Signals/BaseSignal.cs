@@ -3,35 +3,41 @@ using System.Collections.Generic;
 
 namespace Signals
 {
+    public struct Point
+    {
+        public double X;
+        
+        public double Y;
+    }
+
     public abstract class BaseSignal
     {
         private const int PrecisionDigits = 7;
-        private const int SubArraySize = 2;
+        protected const int SamplingFrequency = 800;
         private readonly double Precision = Math.Pow(10, -PrecisionDigits);
 
 
-        public double[][] GetResultValues(Data data)
+        public Point[] GetResultValues(Data data)
         {
-            double[][] results = new double[data.time * data.samplingFrequency + 1][];
+            Point[] results = new Point[data.time * SamplingFrequency + 1];
             double funcResult;
 
-            for (int n = 0; n <= data.time * data.samplingFrequency; n++)
+            for (int n = 0; n <= data.time * SamplingFrequency; n++)
             {
-                results[n] = new double[SubArraySize];
                 funcResult = GetResult(data, n);
 
                 var roundFuncResult = Math.Round(funcResult, PrecisionDigits);
 
                 if (Math.Abs(roundFuncResult - funcResult) < Precision)
                 {
-                    results[n][1] = roundFuncResult;
+                    results[n].Y= roundFuncResult;
                 }
                 else
                 {
-                    results[n][1] = funcResult;
+                    results[n].Y = funcResult;
                 }
 
-                results[n][0] = (double)n / data.samplingFrequency;
+                results[n].X = (double)n / SamplingFrequency;
             }
 
             return results;

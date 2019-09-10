@@ -8,12 +8,17 @@ namespace Signals
             Data data,
             int step)
         {
-            var x = 2 * Math.PI * data.frequency * step / data.samplingFrequency;
+            var x = 2 * Math.PI * data.frequency * step / SamplingFrequency;
             x += data.startPhase;
 
             var result = data.amplitude * Math.Sin(x);
 
             return result;
+        }
+
+        public override string ToString()
+        {
+            return "Sinus";
         }
     }
 }
