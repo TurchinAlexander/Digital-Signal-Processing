@@ -4,21 +4,13 @@ namespace Signals
 {
     public class SinSignal : BaseSignal
     {
-        protected override double GetResult(
-            Data data,
-            int step)
+        public override double GetFunc(double x)
         {
-            var x = 2 * Math.PI * data.frequency * step / SamplingFrequency;
-            x += data.startPhase;
-
-            var result = data.amplitude * Math.Sin(x);
+            var temp = 2 * Math.PI * Frequency * x + Phase;
+            var result = Amplitude * Math.Sin(temp);
 
             return result;
         }
 
-        public override string ToString()
-        {
-            return "Sinus";
-        }
     }
 }
