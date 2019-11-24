@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using SignalExamples;
 using SignalProcessing;
 
@@ -68,6 +69,12 @@ namespace Lab3
             Harmonic[] harmonics = dft.GetFrequencyResponse(funcValues, countOfHarmonics);
 
             DrawSpectrums(harmonics);
+
+            Func<double, double> restoredFunction = RestoreFunction.FromHarmonics(harmonics);
+            Func<double, double> restoredWithoutPhaseFunction = RestoreFunction.FromHarmonicsWithoutPhase(harmonics);
+
+            DrawFunction(restoredFunction, chartFunctions.Series[RestoredFunctionSeries]);
+            DrawFunction(restoredWithoutPhaseFunction, chartFunctions.Series[RestoredWithoutPhaseFunctionSeries]);
         }
 
         private void DrawSpectrums(Harmonic[] harmonics)
@@ -94,6 +101,17 @@ namespace Lab3
             for (int i = 0; i < SamplingFrequency; i++)
             {
                 series.Points.AddXY(i, funcValues[i]);
+            }
+
+        }
+
+        private void DrawFunction(Func<double, double> func, Series series)
+        {
+            series.Points.Clear();
+
+            for (int i = 0; i < SamplingFrequency; i++)
+            {
+                series.Points.AddXY(i, func((double) i / SamplingFrequency));
             }
 
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace SignalProcessing
 {
@@ -51,10 +52,13 @@ namespace SignalProcessing
 
             Harmonic[] result = new Harmonic[countOfHarmonics];
 
+            //result[0] = GetZeroHarmonic(funcValues);
+
             for (int i = 0; i < countOfHarmonics; i++)
             {
                 result[i] = GetHarmonicAmplitudeAndPhase(funcValues, i);
             }
+
 
             return result;
         }
@@ -94,7 +98,7 @@ namespace SignalProcessing
             double amplitudeSin = 2 * im / samplingFrequency;
 
             double amplitude = Math.Sqrt(Math.Pow(amplitudeCos, 2) + Math.Pow(amplitudeSin, 2));
-            double phase = Math.Atan(amplitudeSin / amplitudeCos);
+            double phase = Math.Atan2(amplitudeSin, amplitudeCos);
 
             amplitude = Math.Round(amplitude, DigitsAfterDot);
             phase = Math.Round(phase, DigitsAfterDot);
