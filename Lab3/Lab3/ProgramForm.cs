@@ -19,6 +19,7 @@ namespace Lab3
         private const int InitialFunctionSeries = 0;
         private const int RestoredFunctionSeries = 1;
         private const int RestoredWithoutPhaseFunctionSeries = 2;
+        private const int FilteredFunction = 3;
 
 
         private readonly ISignal harmonicSignal = new HarmonicSignal();
@@ -34,15 +35,6 @@ namespace Lab3
             InitializeComponent();
 
             cmbFunction.SelectedIndex = 0;
-        }
-
-        private void cmbFunction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int index = ((ComboBox) sender).SelectedIndex;
-            countOfHarmonics = int.Parse(txtHarmonicCount.Text);
-
-            ChooseSignal(index);
-            DrawCharts();
         }
 
         private void ChooseSignal(int index)
@@ -75,6 +67,36 @@ namespace Lab3
 
             DrawFunction(restoredFunction, chartFunctions.Series[RestoredFunctionSeries]);
             DrawFunction(restoredWithoutPhaseFunction, chartFunctions.Series[RestoredWithoutPhaseFunctionSeries]);
+
+            DrawFilteredFunction(harmonics);
+        }
+
+        private void DrawFilteredFunction(Harmonic[] harmonics)
+        {
+            int start = 0;
+            int end = 0;
+            bool noChecked = true;
+
+            if (chkLowPassFilter.Checked)
+            {
+                end = int.Parse(txtLowPassFilter.Text);
+                noChecked = false;
+            }
+
+            if (chkHighPassFilter.Checked)
+            {
+                start = int.Parse(txtHighPassFilter.Text);
+                noChecked = false;
+            }
+
+            if (noChecked)
+            {
+                return;
+            }
+
+            Func<double, double> filteredFunction = RestoreFunction.FromHarmonics(harmonics, start, end);
+
+            DrawFunction(filteredFunction, chartFunctions.Series[FilteredFunction]);
         }
 
         private void DrawSpectrums(Harmonic[] harmonics)
@@ -126,6 +148,15 @@ namespace Lab3
             }
 
             return result;
+        }
+
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+            int index = cmbFunction.SelectedIndex;
+            countOfHarmonics = int.Parse(txtHarmonicCount.Text);
+
+            ChooseSignal(index);
+            DrawCharts();
         }
     }
 }

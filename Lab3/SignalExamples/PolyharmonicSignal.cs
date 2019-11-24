@@ -30,11 +30,11 @@ namespace SignalExamples
             {
                 result[i] = new double[2];
 
-                //result[i][Amplitude] = AmplitudeArray[rnd.Next(0, AmplitudeArray.Length - 1)];
-                //result[i][Phase] = PhaseArray[rnd.Next(0, PhaseArray.Length - 1)];
+                result[i][Amplitude] = AmplitudeArray[rnd.Next(0, AmplitudeArray.Length - 1)];
+                result[i][Phase] = PhaseArray[rnd.Next(0, PhaseArray.Length - 1)];
 
-                result[i][Amplitude] = AmplitudeArray[i % AmplitudeArray.Length];
-                result[i][Phase] = PhaseArray[i % PhaseArray.Length];
+                //result[i][Amplitude] = AmplitudeArray[i % AmplitudeArray.Length];
+                //result[i][Phase] = PhaseArray[i % PhaseArray.Length];
             }
 
             return result;
