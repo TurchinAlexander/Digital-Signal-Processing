@@ -6,10 +6,6 @@ namespace SignalProcessing
     {
         private const int DigitsAfterDot = 4;
 
-        private const int AmplitudeAndPhaseSize = 2;
-        private const int Amplitude = 0;
-        private const int Phase = 1;
-
         private readonly int samplingFrequency;
         private readonly int cosOffset;
         private readonly double[] sinArray;
@@ -38,11 +34,22 @@ namespace SignalProcessing
         /// <param name="func">The function which should be researched.</param>
         /// <param name="countOfHarmonics">The number of harmonics into which <paramref name="func"/> should be divided.</param>
         /// <returns>Array of <see cref="double"/> where each element contains Amplitude and Phase of a harmonic.</returns>
-        public double[][] GetFrequencyResponse(Func<double, double> func, int countOfHarmonics/*, FrequencyResponse responseType*/)
+        public Harmonic[] GetFrequencyResponse(Func<double, double> func, int countOfHarmonics/*, FrequencyResponse responseType*/)
         {
             double[] funcValues = GetFuncValues(func);
 
-            double[][] result = new double[countOfHarmonics][];
+            return GetFrequencyResponse(funcValues, countOfHarmonics);
+        }
+
+        public Harmonic[] GetFrequencyResponse(double[] funcValues, int countOfHarmonics/*, FrequencyResponse responseType*/)
+        {
+            if (funcValues.Length < samplingFrequency)
+            {
+                throw new ArgumentException(nameof(funcValues),
+                    $"Size of the array should be equal or greater than {samplingFrequency}");
+            }
+
+            Harmonic[] result = new Harmonic[countOfHarmonics];
 
             for (int i = 0; i < countOfHarmonics; i++)
             {
@@ -66,10 +73,8 @@ namespace SignalProcessing
             return result;
         }
 
-        private double[] GetHarmonicAmplitudeAndPhase(double [] funcValues, int harmonicNumber)
+        private Harmonic GetHarmonicAmplitudeAndPhase(double [] funcValues, int harmonicNumber)
         {
-            double[] result = new double[2];
-
             double re = 0;
             double im = 0;
 
@@ -91,8 +96,10 @@ namespace SignalProcessing
             double amplitude = Math.Sqrt(Math.Pow(amplitudeCos, 2) + Math.Pow(amplitudeSin, 2));
             double phase = Math.Atan(amplitudeSin / amplitudeCos);
 
-            result[Amplitude] = Math.Round(amplitude, DigitsAfterDot);
-            result[Phase] = Math.Round(phase, DigitsAfterDot);
+            amplitude = Math.Round(amplitude, DigitsAfterDot);
+            phase = Math.Round(phase, DigitsAfterDot);
+
+            Harmonic result = new Harmonic(harmonicNumber, amplitude, phase);
 
             return result;
         }

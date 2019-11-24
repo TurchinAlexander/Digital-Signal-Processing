@@ -22,11 +22,11 @@ namespace ConsolveTest
 
             DigitalFourierTransform dft = new DigitalFourierTransform(1024);
 
-            double[][] result = dft.GetFrequencyResponse(func, 10);
+            Harmonic[] result = dft.GetFrequencyResponse(func, 10);
 
             for (int i = 0; i < result.Length; i++)
             {
-                Console.WriteLine($"Harmonic number {i}: Amplitude - {result[i][0]}, phase - {result[i][1]}");
+                Console.WriteLine($"Harmonic number {i}: Amplitude - {result[i].Amplitude}, phase - {result[i].Phase}");
             }
 
             Console.ReadKey();

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EA8D60FA-5972-4D49-99E0-567740DFFF43}</ProjectGuid>
+    <ProjectGuid>{E7187CD6-07DC-4306-8433-4FC26974D5B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SignalProcessing</RootNamespace>
-    <AssemblyName>SignalProcessing</AssemblyName>
+    <RootNamespace>SignalExamples</RootNamespace>
+    <AssemblyName>SignalExamples</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,9 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DigitalFourierTransform.cs" />
-    <Compile Include="FrequencyResponse.cs" />
-    <Compile Include="Harmonic.cs" />
+    <Compile Include="HarmonicSignal.cs" />
+    <Compile Include="ISignal.cs" />
+    <Compile Include="PolyharmonicSignal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
