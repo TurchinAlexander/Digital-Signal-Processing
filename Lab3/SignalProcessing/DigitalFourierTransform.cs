@@ -4,6 +4,8 @@ namespace SignalProcessing
 {
     public class DigitalFourierTransform
     {
+        private const int DigitsAfterDot = 4;
+
         private const int AmplitudeAndPhaseSize = 2;
         private const int Amplitude = 0;
         private const int Phase = 1;
@@ -70,9 +72,6 @@ namespace SignalProcessing
 
             double re = 0;
             double im = 0;
-            double amplitudeCos = 0;
-            double amplitudeSin = 0;
-
 
             int sinIndex = 0;
             int cosIndex = cosOffset;
@@ -86,11 +85,14 @@ namespace SignalProcessing
                 cosIndex = (cosIndex + harmonicNumber) % samplingFrequency;
             }
 
-            amplitudeCos = re / samplingFrequency;
-            amplitudeSin = im / samplingFrequency;
+            double amplitudeCos = 2 * re / samplingFrequency;
+            double amplitudeSin = 2 * im / samplingFrequency;
 
-            result[Amplitude] = Math.Sqrt(Math.Pow(amplitudeCos, 2) + Math.Pow(amplitudeSin, 2));
-            result[Phase] = Math.Atan(amplitudeSin / amplitudeCos);
+            double amplitude = Math.Sqrt(Math.Pow(amplitudeCos, 2) + Math.Pow(amplitudeSin, 2));
+            double phase = Math.Atan(amplitudeSin / amplitudeCos);
+
+            result[Amplitude] = Math.Round(amplitude, DigitsAfterDot);
+            result[Phase] = Math.Round(phase, DigitsAfterDot);
 
             return result;
         }
