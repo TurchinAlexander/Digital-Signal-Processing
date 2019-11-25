@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,10 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DigitalFourierTransform.cs" />
+    <Compile Include="FastFourierTransform.cs" />
     <Compile Include="FrequencyResponse.cs" />
     <Compile Include="Harmonic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestoreFunction.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -91,6 +91,11 @@ namespace Lab3
 
             if (noChecked)
             {
+                if (chartFunctions.Series[FilteredFunction].Points.Count > 0)
+                {
+                    chartFunctions.Series[FilteredFunction].Points.Clear();
+                }
+
                 return;
             }
 

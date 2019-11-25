@@ -11,7 +11,7 @@ namespace ConsolveTest
     {
         static void Main(string[] args)
         {
-            int N = 10;
+            int N = 8;
 
             Func<double, double> func = (x) => 10 * Math.Cos(2 * Math.PI * x - Math.PI / 2);
 
@@ -20,9 +20,15 @@ namespace ConsolveTest
             //    Console.WriteLine($"{(double) i / N} - {func((double) i / N)}");
             //}
 
-            DigitalFourierTransform dft = new DigitalFourierTransform(1024);
+            //DigitalFourierTransform dft = new DigitalFourierTransform(1024);
 
-            Harmonic[] result = dft.GetFrequencyResponse(func, 10);
+            //Harmonic[] result = dft.GetFrequencyResponse(func, 10);
+
+            FastFourierTransform fft = new FastFourierTransform(4);
+
+            double[] values = new double[] {8, 4, 8, 0};
+
+            Harmonic[] result = fft.GetResponse(values);
 
             for (int i = 0; i < result.Length; i++)
             {
