@@ -6,19 +6,13 @@ namespace Signals
     {
         private readonly double SinBound = Math.PI / 2;
 
-        protected override double GetResult(Data data, int step)
+        public override double GetFunc(double x)
         {
-            var x = 2 * Math.PI * data.frequency * step / SamplingFrequency;
-            x += data.startPhase;
+            var temp = 2 * Math.PI * Frequency * x + Phase;
 
-            var funcResult = data.amplitude * Math.Asin(Math.Sin(x)) / SinBound;
+            var funcResult = Amplitude * Math.Asin(Math.Sin(temp)) / SinBound;
 
             return funcResult;
-        }
-
-        public override string ToString()
-        {
-            return "Triangle";
         }
     }
 }

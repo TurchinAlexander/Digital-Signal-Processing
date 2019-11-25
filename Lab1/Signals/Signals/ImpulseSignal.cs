@@ -4,28 +4,21 @@ namespace Signals
 {
     public class ImpulseSignal : BaseSignal
     {
-        private readonly double SinBound = Math.PI / 2;
-        private readonly double DefaultRelation = 0.5;
+        public double DutyFactor { get; set; }
 
-        public ImpulseSignal()
+        public override double GetFunc(double x)
         {
+            var temp = 2 * Math.PI * Frequency * x + Phase;
+            var sin = Math.Sin(temp);
+
+            var funcResult = sin >= 1 - 2 * DutyFactor;
+
+            return funcResult ? Amplitude : -Amplitude;
+            //var multiple = 2.0 * Frequency;
+            //var sampleSaw = ((x * multiple) % 2) - 1;
+
+            //return sampleSaw > 0 ? Amplitude : -Amplitude;
         }
 
-        protected override double GetResult(Data data, int step)
-        {
-            var x = 2 * Math.PI * data.frequency * step / SamplingFrequency;
-            x += data.startPhase;
-
-            var sin = Math.Sin(x);
-
-            var funcResult = sin >= 1 - 2 * data.dutyFactor;
-
-            return funcResult ? data.amplitude : 0;
-        }
-
-        public override string ToString()
-        {
-            return "Impulse";
-        }
     }
 }
