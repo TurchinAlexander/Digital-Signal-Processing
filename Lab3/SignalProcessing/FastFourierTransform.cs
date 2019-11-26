@@ -64,13 +64,14 @@ namespace SignalProcessing
             Complex[] odd = FFT(funcValues,  2 * step, start + step);
 
 
-            int resultLength = even.Length;
-            Complex[] result = new Complex[2 * resultLength];
+            int resultLength = even.Length + odd.Length;
+            int t = samplingFrequency / resultLength;
+            Complex[] result = new Complex[resultLength];
 
-            for (int i = 0; i < resultLength; i++)
+            for (int i = 0; i < resultLength / 2; i++)
             {
-                result[i] = even[i] + complexMatrix[i] * odd[i];
-                result[i + resultLength] = even[i] - complexMatrix[i] * odd[i];
+                result[i] = even[i] + complexMatrix[i * t] * odd[i];
+                result[i + resultLength / 2] = even[i] - complexMatrix[i * t] * odd[i];
             }
 
             return result;
