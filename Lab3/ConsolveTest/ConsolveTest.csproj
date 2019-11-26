@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SignalExamples\SignalExamples.csproj">
+      <Project>{e7187cd6-07dc-4306-8433-4fc26974d5b9}</Project>
+      <Name>SignalExamples</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SignalProcessing\SignalProcessing.csproj">
       <Project>{ea8d60fa-5972-4d49-99e0-567740dfff43}</Project>
       <Name>SignalProcessing</Name>
