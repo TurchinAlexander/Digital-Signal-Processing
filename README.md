@@ -14,7 +14,7 @@ Determine the period of the signal by taking count of points and calculate signa
 ## Lab work 3
 Decompose the signal into Fourier series. Show the Amplitude and Phase spectrums of the signal. Create Low Frequency and High Frequency Filters.
 
-Create a smoothing to the signal to remove the noises and other not necessary elements from it.
+Create a smoothing to the signal to remove the noises and other not necessary elements from it.  
 Methods:
 1. Average arithmetic window.
 2. Parabola in 4 degree.
