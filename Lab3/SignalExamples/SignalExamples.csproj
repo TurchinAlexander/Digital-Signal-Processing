@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonicSignal.cs" />
+    <Compile Include="HighFrequenciesSignal.cs" />
     <Compile Include="ISignal.cs" />
     <Compile Include="PolyharmonicSignal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

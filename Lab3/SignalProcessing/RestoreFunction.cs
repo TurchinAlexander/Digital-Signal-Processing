@@ -56,7 +56,12 @@ namespace SignalProcessing
             int start = startHarmonic;
             int end = (harmonics.Length - 1 > endHarmonic)
                 ? endHarmonic
-                : harmonics.Length;
+                : harmonics.Length - 1;
+
+            if (endHarmonic == 0)
+            {
+                end = harmonics.Length - 1;
+            }
 
             return (double x) =>
             {
@@ -68,10 +73,9 @@ namespace SignalProcessing
                     start += 1;
                 }
 
-                for (int i = start; i < end; i++)
+                for (int i = start; i <= end; i++)
                 {
-                    value += harmonics[i].Amplitude *
-                             Math.Cos(2 * Math.PI * harmonics[i].Frequency * x - harmonics[i].Phase);
+                    value += harmonics[i].Amplitude * Math.Cos(2 * Math.PI * harmonics[i].Frequency * x - harmonics[i].Phase);
                 }
 
                 return value;
