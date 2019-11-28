@@ -20,10 +20,12 @@ namespace Lab3
         private const int RestoredFunctionSeries = 1;
         private const int RestoredWithoutPhaseFunctionSeries = 2;
         private const int FilteredFunction = 3;
+        private const int SmoothingFunction = 4;
 
 
         private readonly ISignal harmonicSignal = new HarmonicSignal();
         private readonly ISignal polyharmonicSignal = new PolyharmonicSignal();
+        private readonly ISignal highFrequenciesSignal = new HighFrequenciesSignal();
 
         private readonly DigitalFourierTransform dft = new DigitalFourierTransform(SamplingFrequency);
 
@@ -35,6 +37,7 @@ namespace Lab3
             InitializeComponent();
 
             cmbFunction.SelectedIndex = 0;
+            cmbFilter.SelectedIndex = 0;
         }
 
         private void ChooseSignal(int index)
@@ -47,6 +50,9 @@ namespace Lab3
                 case 1:
                     signal = polyharmonicSignal;
                     break;
+                case 2:
+                    signal = highFrequenciesSignal;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -56,6 +62,7 @@ namespace Lab3
         {
             double[] funcValues = GetFuncValues();
 
+            ClearChartFunction();
             DrawInitialFunction(funcValues);
 
             Harmonic[] harmonics = dft.GetFrequencyResponse(funcValues, countOfHarmonics);
@@ -67,8 +74,71 @@ namespace Lab3
 
             DrawFunction(restoredFunction, chartFunctions.Series[RestoredFunctionSeries]);
             DrawFunction(restoredWithoutPhaseFunction, chartFunctions.Series[RestoredWithoutPhaseFunctionSeries]);
-
+            
             DrawFilteredFunction(harmonics);
+
+            if (chkSmoothing.Checked)
+            {
+                double[] filterValues = DrawSmoothingFunction(funcValues);
+                Harmonic[] filterHarmonics = dft.GetFrequencyResponse(filterValues, countOfHarmonics);
+
+                DrawFilteredSpectrums(filterHarmonics);
+            }
+        }
+
+        private void DrawFilteredSpectrums(Harmonic[] harmonics)
+        {
+            var amplitudePoints = chartFilteredAmplitude.Series[0].Points;
+            var phasePoints = chartFilteredPhase.Series[0].Points;
+
+            amplitudePoints.Clear();
+            phasePoints.Clear();
+
+            for (int i = 0; i < harmonics.Length; i++)
+            {
+                amplitudePoints.AddXY(i, harmonics[i].Amplitude);
+                phasePoints.AddXY(i, harmonics[i].Phase);
+            }
+        }
+
+        private void ClearChartFunction()
+        {
+            foreach (var series in chartFunctions.Series)
+            {
+                series.Points.Clear();
+            }
+        }
+
+        private double[] DrawSmoothingFunction(double[] funcValues)
+        {
+            double[] output;
+
+            switch (cmbFilter.SelectedIndex)
+            {
+                case 0:
+                    output = SignalSmoothing.ByArithmeticAveraging(funcValues, 5);
+                    break;
+                case 1:
+                    output = SignalSmoothing.ByParabola4(funcValues);
+                    break;
+                case 2:
+                    output = SignalSmoothing.ByMedianFiltering(funcValues, 5);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cmbFilter.SelectedIndex));
+            }
+
+            DrawFunctionByPoints(output, chartFunctions.Series[SmoothingFunction]);
+
+            return output;
+        }
+
+        private void DrawFunctionByPoints(double[] output, Series series)
+        {
+            for (int i = 0; i < SamplingFrequency; i++)
+            {
+                series.Points.AddXY(i, output[i]);
+            }
         }
 
         private void DrawFilteredFunction(Harmonic[] harmonics)
@@ -123,8 +193,6 @@ namespace Lab3
         {
             var series = chartFunctions.Series[InitialFunctionSeries];
 
-            series.Points.Clear();
-
             for (int i = 0; i < SamplingFrequency; i++)
             {
                 series.Points.AddXY(i, funcValues[i]);
@@ -134,8 +202,6 @@ namespace Lab3
 
         private void DrawFunction(Func<double, double> func, Series series)
         {
-            series.Points.Clear();
-
             for (int i = 0; i < SamplingFrequency; i++)
             {
                 series.Points.AddXY(i, func((double) i / SamplingFrequency));
