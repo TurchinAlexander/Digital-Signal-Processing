@@ -25,8 +25,12 @@ namespace SignalExamples
         private double[][] CalculateAmplitudesAndPhases()
         {
             double[][] result = new double[ArraySize][];
+            result[0] = new double[2];
 
-            for (int i = 0; i < ArraySize; i++)
+            result[0][Amplitude] = AmplitudeArray[rnd.Next(0, AmplitudeArray.Length - 1)];
+            result[0][Phase] = 0;
+
+            for (int i = 1; i < ArraySize; i++)
             {
                 result[i] = new double[2];
 

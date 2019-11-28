@@ -46,6 +46,7 @@
     <Compile Include="Harmonic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestoreFunction.cs" />
+    <Compile Include="SignalSmoothing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
