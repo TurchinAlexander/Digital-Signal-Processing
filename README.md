@@ -21,4 +21,6 @@ Methods:
 3. Median Filtering window.
 
 ## Image Filtering
-Filtering the image with 2D Median filtering windows to remove noises and other not necessary elements from it.
+1. Filtering the image with 2D Median filtering windows to remove noises and other not necessary elements from it.
+2. Bluring a picture using Gauss filter.
+3. Show a countour of the picture using Sobel filter.
